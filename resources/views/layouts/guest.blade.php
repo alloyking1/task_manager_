@@ -15,7 +15,9 @@
         @livewireStyles
     </head>
     <body class="font-sans text-gray-900 antialiased">
+            <div class="max-w-3xl mx-auto my-[14rem]">
                 {{ $slot }}
+            </div>
         @livewireScripts
         <script src="https://cdn.jsdelivr.net/gh/livewire/sortable@v0.x.x/dist/livewire-sortable.js"></script>
     </body>
