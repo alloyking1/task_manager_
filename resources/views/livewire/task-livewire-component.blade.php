@@ -7,9 +7,9 @@
     
     <div class="p-6">
         <h1 class="text-2xl font-bold mb-1">Create Task</h1>
-        <form wire:submit.prevent="create">
-            <input wire:model="name" type="text" class="border rounded w-auto p-3" placeholder="Enter task name">
-            <input wire:model="priority" type="number" class="border rounded w-auto p-3" placeholder="Enter task priority">
+        <form wire:submit="create">
+            <input wire:model.live="name" type="text" class="border rounded w-auto p-3" placeholder="Enter task name">
+            <input wire:model.live="priority" type="number" class="border rounded w-auto p-3" placeholder="Enter task priority">
             <button class="p-3 bg-blue-500 text-white rounded">create task</button>
         </form>
     </div>
