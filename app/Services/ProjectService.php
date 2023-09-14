@@ -4,10 +4,12 @@ namespace App\Services;
 
 use App\Dto\ProjectDto;
 use App\Models\Project;
+use App\Models\User;
+use App\Traits\ProjectInviteTrait;
 
 class ProjectService
 {
-
+    use ProjectInviteTrait;
     /**
      * Undocumented function
      *
@@ -15,17 +17,14 @@ class ProjectService
      */
     public function create(ProjectDto $dto)
     {
-        return Project::create([
+        $project = Project::create([
             'user_id' => $dto->user_id,
             'name' => $dto->name,
             'description' => $dto->description
         ]);
 
-        //send request / add members to card
-        //notify members via email
-    }
+        $this->sendInvite($project, $dto->invites);
 
-    public function inviteMember()
-    {
+        return;
     }
 }

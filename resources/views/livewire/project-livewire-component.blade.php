@@ -80,6 +80,16 @@
                         <x-text-input wire:model.live="description" class="block mt-1 w-full" type="text" placeholder="Project description" />
                         <x-input-error :messages="$errors->get('description')" class="mt-2" />
                     </div>
+
+                    {{-- <div class="mt-4">
+                    
+                        <select multiple wire:model="invites">
+                            <option value="testing">testing</option>
+                            <option value="testing">refresh</option>
+                            <option value="testing">working</option>
+                        </select>
+                        <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                    </div> --}}
             
                     <div class="flex items-center justify-end mt-4">
                         <x-primary-button class="ml-3">

@@ -14,17 +14,19 @@ class ProjectLivewireComponent extends Component
 {
     public $name = "";
     public $description = "";
+    public $invites = [];
 
     public function create(ProjectService $service)
     {
-
-        $validated = $this->validate([
+        $this->validate([
             'name' => 'required|min:3',
             'description' => 'sometimes|min:3',
+            'invites' => 'sometimes|array'
         ]);
 
-        $save = $service->create(ProjectDto::requestValue(['user_id' => Auth::id(), 'name' => $this->name, 'description' => $this->description]));
-        $this->reset();
+        $this->invites = Auth::id();
+        $save = $service->create(ProjectDto::requestValue(['user_id' => Auth::id(), 'name' => $this->name, 'description' => $this->description, 'invites' => $this->invites]));
+        // $this->reset();
     }
 
     public function edit()
