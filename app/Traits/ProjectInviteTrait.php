@@ -17,6 +17,6 @@ trait ProjectInviteTrait
         }
         $project->members()->attach($invitedUserIds);
 
-        $this->sendNotification($invitedUserIds, 'You have been added to a project');
+        // $this->sendNotification($invitedUserIds, 'You have been added to a project');
     }
 }
