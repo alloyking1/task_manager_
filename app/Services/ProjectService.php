@@ -27,4 +27,9 @@ class ProjectService
 
         return;
     }
+
+    public function delete($id)
+    {
+        return Project::find($id)->delete();
+    }
 }

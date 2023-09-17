@@ -24,13 +24,20 @@ class ProjectLivewireComponent extends Component
             'invites' => 'sometimes|array'
         ]);
 
-        $this->invites = Auth::id();
+        $this->invites = [Auth::id()];
         $save = $service->create(ProjectDto::requestValue(['user_id' => Auth::id(), 'name' => $this->name, 'description' => $this->description, 'invites' => $this->invites]));
-        // $this->reset();
+        $this->reset();
     }
 
     public function edit()
     {
+    }
+
+    public function delete($id, ProjectService $service)
+    {
+        $service->delete($id);
+
+        // $this->reset();
     }
 
     public function render()

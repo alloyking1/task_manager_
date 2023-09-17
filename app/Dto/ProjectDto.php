@@ -9,7 +9,7 @@ class ProjectDto
         public readonly string $user_id,
         public readonly string $name,
         public readonly string $description,
-        public readonly string $invites
+        public readonly array $invites
     ) {
     }
 
