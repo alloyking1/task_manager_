@@ -7,15 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProjectInviteNotificationErrorFix extends Notification
+class ProjectInvitationNotification extends Notification
 {
     use Queueable;
 
+
+    public $content;
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($content)
     {
+        $this->content = $content;
     }
 
     /**
@@ -25,7 +28,8 @@ class ProjectInviteNotificationErrorFix extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        // return ['database'];
+        return ['mail'];
     }
 
     /**
@@ -34,7 +38,7 @@ class ProjectInviteNotificationErrorFix extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
+            ->line($this->content['body'])
             ->action('Notification Action', url('/'))
             ->line('Thank you for using our application!');
     }
@@ -47,7 +51,8 @@ class ProjectInviteNotificationErrorFix extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'notification' => 'tesing this shit'
+            'name' => $this->content['name'],
+            'body' => $this->content['body'],
         ];
     }
 }

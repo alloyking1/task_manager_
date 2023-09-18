@@ -12,16 +12,13 @@
         <hr>
 
         @forelse ($projects as $project )
-        <div>
-            <h1 class="text-2xl">{{ $project->name }}</h1>
-            <button wire:click="delete({{ $project->id }})">delete</button>
-        </div>
-            {{-- <x-elements.card class="bg-white p-6 mt-6">
+            
+            <x-elements.card class="bg-white p-6 mt-6">
                 <x-elements.task-content :name="$project->name" :members="[]">
                     <x-btn.edit/>
                     <x-btn.delete wire:click="delete({{ $project->id }})"/>
                 </x-elements.task-content>
-            </x-elements.card> --}}
+            </x-elements.card>
         @empty
             <p>No projects</p>
         @endforelse
@@ -30,7 +27,7 @@
     </div>
 
    <x-elements.side-modal>
-    <form wire:submit="create">
+    <form wire:submit.prevent="save">
         <div>
             <x-text-input wire:model.live="name" class="block mt-1 w-full" type="text" placeholder="Project name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />

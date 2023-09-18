@@ -4,6 +4,11 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Auth;
+// use App\Notifications\ProjectInviteNotification;
+use App\Notifications\TestingNotification;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +25,8 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    // Notification::send(Auth::user(), new ProjectInviteNotification(['name' => 'moses', 'body' => 'this is the notification body']));
+    // Notification::send(Auth::user(), new TestingNotification(['name' => 'notificatioin', 'body' => 'the notification body']));
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
