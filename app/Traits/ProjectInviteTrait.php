@@ -17,17 +17,14 @@ trait ProjectInviteTrait
 
     public function sendInvite($project, $members, $message = ["name" => 'message', "body" => 'notification body'])
     {
-        $invitedUsers = [];
         foreach ($members as $val) {
             $user = User::where('email', $val)->orWhere('id', $val)->get();
             $project->members()->attach($user->pluck('id'));
-            array_push($invitedUsers, $user);
-        }
-
-        try {
-            Notification::send($user, new ProjectInvitationNotification(['name' => 'moses', 'body' => 'this is the notification body']));
-        } catch (Exception $e) {
-            dump($e->getMessage());
+            try {
+                Notification::send($user, new ProjectInvitationNotification(['name' => 'moses', 'body' => 'this is the notification body']));
+            } catch (Exception $e) {
+                dump($e->getMessage());
+            }
         }
     }
 

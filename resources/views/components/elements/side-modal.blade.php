@@ -5,6 +5,7 @@
 class="bg-gray-300 shadow-sm rounded-l-md col-span-2 top-0 bottom-0 right-0 w-full md:w-1/2 fixed p-8"
  x-show="show"
  x-transition
+ x-on:click.outside="show = false"
 >
     <div class="grid mx-auto w-auto place-contents-center">
         <x-elements.justify-between>

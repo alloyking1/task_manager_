@@ -15,29 +15,39 @@ class ProjectLivewireComponent extends Component
 {
     public $name = "";
     public $description = "";
+    public $projectId = "";
     public $invites = [];
-    protected $listeners = ['refreshComponent' => '$refresh'];
 
-    public function save(ProjectService $service)
+    public function create(ProjectService $service)
     {
         $this->validate([
             'name' => 'required|min:3',
             'description' => 'sometimes|min:3',
             'invites' => 'sometimes|array'
         ]);
-        $this->invites = [Auth::id()];
-        $save = $service->create(ProjectDto::requestValue(['user_id' => Auth::id(), 'name' => $this->name, 'description' => $this->description, 'invites' => $this->invites]));
+        $this->invites = [Auth::id(), 'test2@gmail.com'];
+        $service->createOrEdit(ProjectDto::requestValue(['user_id' => Auth::id(), 'name' => $this->name, 'description' => $this->description, 'invites' => $this->invites]), $this->projectId);
         $this->reset();
     }
 
-    public function edit()
+    public function edit($id)
     {
+        $project = Project::find($id);
+        $this->name = $project->name;
+        $this->description = $project->description;
+        $this->projectId = $project->id;
     }
 
     public function delete($id, ProjectService $service)
     {
         $service->delete($id);
     }
+
+    public function show($id)
+    {
+        redirect()->route('project.show', $id);
+    }
+
 
     public function render()
     {

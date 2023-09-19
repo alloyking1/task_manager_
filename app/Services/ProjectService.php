@@ -15,15 +15,21 @@ class ProjectService
      *
      * @return void
      */
-    public function create(ProjectDto $dto)
+    public function createOrEdit(ProjectDto $dto, $id = null)
     {
-        $project = Project::create([
-            'user_id' => $dto->user_id,
-            'name' => $dto->name,
-            'description' => $dto->description
-        ]);
+        $project = Project::updateOrCreate(
+            ['id' => $id],
+            [
+                'user_id' => $dto->user_id,
+                'name' => $dto->name,
+                'description' => $dto->description
+            ]
+        );
 
-        $this->sendInvite($project, $dto->invites);
+        if ($id === null) {
+
+            $this->sendInvite($project, $dto->invites);
+        }
 
         return;
     }

@@ -3,11 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
-
-use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Auth;
-// use App\Notifications\ProjectInviteNotification;
-use App\Notifications\TestingNotification;
+use App\Http\Controllers\ProjectController;
+use App\Http\Livewire\ProjectLivewireComponent;
+use App\Http\Livewire\ProjectLivewireTableComponent;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,11 +22,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    // Notification::send(Auth::user(), new ProjectInviteNotification(['name' => 'moses', 'body' => 'this is the notification body']));
-    // Notification::send(Auth::user(), new TestingNotification(['name' => 'notificatioin', 'body' => 'the notification body']));
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::prefix('/project')->group(function () {
+    Route::get('/', ProjectLivewireComponent::class)->name('project.list');
+    Route::get('/show/{id}', ProjectLivewireTableComponent::class)->name('project.show');
+})->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
