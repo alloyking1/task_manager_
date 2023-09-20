@@ -4,7 +4,7 @@
 ])
  @if($text != null)
 
-<button class="w-[45px] h-[45px] rounded-full bg-black text-white text-center">
+<button {{ $attributes->merge(['class' => "w-[45px] h-[45px] rounded-full bg-black text-white text-center"]) }}>
     {{ $text }}
    
 </button>

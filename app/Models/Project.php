@@ -20,4 +20,9 @@ class Project extends Model
     {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
+
+    public function tables()
+    {
+        return $this->hasMany(Table::class, 'projects_id');
+    }
 }

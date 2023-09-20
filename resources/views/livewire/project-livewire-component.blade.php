@@ -12,7 +12,7 @@
         <hr>
 
         @forelse ($projects as $project )
-            <a wire:click="show({{ $project->id }})" class="cursor-pointer">
+            <a wire:click.prevent="show({{ $project->id }})" class="cursor-pointer">
                 <x-elements.card class="bg-white p-6 mt-6">
                     <x-elements.task-content :name="$project->name" :members="[]">
                         <x-btn.edit x-on:click="show = !show" wire:click="edit({{ $project->id }})"/>

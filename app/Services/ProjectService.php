@@ -38,4 +38,10 @@ class ProjectService
     {
         return Project::find($id)->delete();
     }
+
+    public function getProject($id)
+    {
+        //eager load
+        return Project::where('id', $id)->with('tables')->get();
+    }
 }
