@@ -14,7 +14,6 @@
                 @foreach ($project->tables as $table )
                     <x-elements.card class="bg-white p-6 mt-6 w-[25%]">
                         <div class="flex justify-between">
-
                             {{$table->name}}
                             <span x-on:click="show = !show">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -25,35 +24,46 @@
                         </div>
                         <hr>
                         <div class="grid grid-cols-1 gap-2">
-                            @foreach ($table->task  as $task )
+                            @forelse($table->task  as $task )
                             <div class="bg-white p-6 mt-6 w-auto rounded border">
                                 {{ $task->name }}
                             </div>
 
-                            {{-- <div x-data{show:false} id="{{ now() }}">
-                                <form wire:submit.prevent="create" x-show="show">
-                                    <div>
-                                        <x-text-input wire:model.live="name" class="block mt-1 w-full" type="text" placeholder="Little about the task" />
-                                        <x-text-input wire:model.live="taskId" value="{{ $task->id }}" type="hidden" />
-                                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
-                                    </div>
+                            {{-- @if ($loop->last)
+                                @php $this->tableId = $table->id @endphp
+                                <x-elements.add-task-form taskName="taskName" tableId="tableId" tableIdValue="{{ $table->id }}" wireSubmitMethodName="createTask" />
+                            @endif --}}
+
+                            @empty
+                            {{-- @php $this->tableId = $table->id @endphp --}}
+                            {{-- <x-elements.add-task-form taskName="taskName" tableId="tableId" tableIdValue="{{ $table->id }}" wireSubmitMethodName="createTask" /> --}}
                             
-                                    <div class="flex items-center justify-end mt-4">
-                                        
-                                        <x-primary-button class="ml-3 mr-2">
-                                            {{ __('Create') }}
-                                        </x-primary-button>
-                                        <span @click="show=false">X</span>
-                                    </div>
-                                </form>
-                                <button @click="show = true" x-show="show==false">Add task</button>
-                            </div> --}}
-                            @endforeach
+                            @endforelse
                         </div>
+
+                        
+                        @php 
+                            $this->tableKey[$loop->index] = $loop->iteration;
+                            // $this->tableId = $this->tableKey[$loop->index]
+                        @endphp
+                        <input type="text" value="{{ $loop->iteration }}">
+                        {{-- <input type="text" wire:model="taskName">
+                        <input type="text" wire:model="{{ $this->tableKey[$loop->index] }}"> --}}
+                        {{-- {{ $this->tableKey[$loop->index] }} --}}
+
+
+
+                        <form wire:submit.prevent="createTask">
+                            <input type="text" wire:model="taskName">
+                            <input type="text" wire:model="tableId">
+                                <x-primary-button class="ml-3 mr-2">
+                                    {{ __('Create') }}
+                                </x-primary-button>
+                            </div>
+                        </form>
                     </x-elements.card>
                 @endforeach
             </div>
         @endforeach
-        
     </div>
 </div>

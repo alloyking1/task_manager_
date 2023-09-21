@@ -20,7 +20,8 @@ class TaskFactory extends Factory
             'name' => fake()->name(),
             'priority' => 1,
             'status' => 0,
-            'table_id' => 1
+            'table_id' => 1,
+            'user_id' => 1
         ];
     }
 }

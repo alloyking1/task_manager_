@@ -39,9 +39,8 @@ class ProjectService
         return Project::find($id)->delete();
     }
 
-    public function getProject($id)
+    public function getProjectFullRelationships($id)
     {
-        //eager load
-        return Project::where('id', $id)->with('tables')->get();
+        return Project::where('id', $id)->with(['tables' => ['task']])->get();
     }
 }
