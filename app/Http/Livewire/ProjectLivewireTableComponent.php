@@ -8,6 +8,7 @@ use App\Services\TaskService;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Table;
 
 class ProjectLivewireTableComponent extends Component
 {
@@ -17,7 +18,8 @@ class ProjectLivewireTableComponent extends Component
     public $taskName;
     public $tableId = "";
 
-    public $tableKey = [];
+    public $tableName;
+    public $projectId;
 
     public function mount($id, ProjectService $projectService)
     {
@@ -30,9 +32,11 @@ class ProjectLivewireTableComponent extends Component
         return $this->projectCollection = $projectService->getProjectFullRelationships($this->projectKey);
     }
 
-    public function createTask(TaskService $taskService, ProjectService $projectService)
+    public function createTask(TaskService $taskService, ProjectService $projectService, $tableID, $taskNAME)
     {
-        dd($this->tableId);
+        $this->tableId = $tableID;
+        $this->taskName = $taskNAME;
+
         $this->validate([
             'taskName' => 'required|min:3',
             'tableId' => 'required|numeric',
@@ -47,6 +51,17 @@ class ProjectLivewireTableComponent extends Component
 
         $this->projectCollection = $this->getOneProject($projectService);
         $this->reset(['taskName']);
+    }
+
+    public function createTable(ProjectService $projectService, $projectId)
+    {
+        // service class
+        Table::create([
+            'name' => $this->tableName,
+            'projects_id' => $projectId
+        ]);
+        $this->projectCollection = $this->getOneProject($projectService);
+        $this->reset('tableName');
     }
 
     public function render()

@@ -5,8 +5,10 @@
             <x-elements.justify-between class="mt-10">
                 
                 <h3 class="text-3xl font-bold mb-4">{{ $project->name }}</h3>
-                <span x-on:click="show = !show">
-                    <x-elements.round-button text="+"/>
+                <span x-on:click="show = !show" class="flex gap-4">
+                    <x-text-input wire:model="tableName" class="block mt-1 w-full" type="text" placeholder="New table" required/>
+                    
+                    <x-elements.round-button text="+" wire:click="createTable({{ $project->id }})"/>
                 </span>
             </x-elements.justify-between>
             <hr>
@@ -25,42 +27,20 @@
                         <hr>
                         <div class="grid grid-cols-1 gap-2">
                             @forelse($table->task  as $task )
-                            <div class="bg-white p-6 mt-6 w-auto rounded border">
-                                {{ $task->name }}
-                            </div>
-
-                            {{-- @if ($loop->last)
-                                @php $this->tableId = $table->id @endphp
-                                <x-elements.add-task-form taskName="taskName" tableId="tableId" tableIdValue="{{ $table->id }}" wireSubmitMethodName="createTask" />
-                            @endif --}}
-
+                                <div class="bg-white p-6 mt-6 w-auto rounded border">
+                                    {{ $task->name }}
+                                    {{ $task->table_id }}
+                                </div>
                             @empty
-                            {{-- @php $this->tableId = $table->id @endphp --}}
-                            {{-- <x-elements.add-task-form taskName="taskName" tableId="tableId" tableIdValue="{{ $table->id }}" wireSubmitMethodName="createTask" /> --}}
-                            
+                            <p>Add a task to this table</p>
                             @endforelse
-                        </div>
-
-                        
-                        @php 
-                            $this->tableKey[$loop->index] = $loop->iteration;
-                            // $this->tableId = $this->tableKey[$loop->index]
-                        @endphp
-                        <input type="text" value="{{ $loop->iteration }}">
-                        {{-- <input type="text" wire:model="taskName">
-                        <input type="text" wire:model="{{ $this->tableKey[$loop->index] }}"> --}}
-                        {{-- {{ $this->tableKey[$loop->index] }} --}}
-
-
-
-                        <form wire:submit.prevent="createTask">
-                            <input type="text" wire:model="taskName">
-                            <input type="text" wire:model="tableId">
-                                <x-primary-button class="ml-3 mr-2">
-                                    {{ __('Create') }}
+                            <div x-data="{taskName:''}">
+                                <x-text-input x-model="taskName" class="block mt-1 w-full" type="text" required/>
+                                <x-primary-button class="ml-3" x-on:click="$wire.createTask({{ $loop->iteration }}, taskName)">
+                                    {{ __('click') }}
                                 </x-primary-button>
                             </div>
-                        </form>
+                        </div>
                     </x-elements.card>
                 @endforeach
             </div>

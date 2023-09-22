@@ -9,7 +9,7 @@ class Table extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'project_id'];
+    protected $fillable = ['name', 'projects_id'];
 
     public function projects()
     {
